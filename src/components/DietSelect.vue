@@ -1,8 +1,13 @@
 <template>
   <v-card height="100%">
-    <v-card-title class="white--text purple lighten-1">Diets</v-card-title>
+    <v-card-title class="white--text deep-purple accent-2">Diets</v-card-title>
     <v-card-text class="mt-6">
-      <v-chip-group multiple column active-class="purple--text">
+      <v-chip-group
+        :value="diets"
+        multiple
+        column
+        active-class="light-blue--text"
+      >
         <v-chip
           v-for="option in options"
           @click="toggle(option)"

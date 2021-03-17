@@ -10,6 +10,7 @@ export default new Vuex.Store({
     searchResults: [],
     ingredients: [],
     diets: [],
+    mealType: null,
   },
   mutations: {
     setSearchResults(state, payload) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
         return d !== payload;
       });
     },
+    setMealType(state, payload) {
+      state.mealType = payload;
+    },
   },
   actions: {
     async getRandomRecipes({ getters, commit }) {
@@ -40,8 +44,8 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    recipeURL({ ingredients, diets }) {
-      const tags = [...ingredients, ...diets].join(",").toLowerCase();
+    recipeURL({ ingredients, diets, mealType }) {
+      const tags = [...ingredients, ...diets, mealType].join(",").toLowerCase();
       return `${apiURL}&tags=${tags}`;
     },
   },

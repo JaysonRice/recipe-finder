@@ -1,12 +1,14 @@
 <template>
   <v-card>
-    <v-card-title class="white--text purple lighten-1"
+    <v-card-title class="white--text deep-purple accent-2"
       >Key Ingredients</v-card-title
     >
     <v-card-text>
       <div class="pb-6" v-if="ingredients.length">
         <v-chip-group column>
           <v-chip
+            class="light-blue"
+            dark
             v-for="ingredient in ingredients"
             close
             @click:close="removeIngredient(ingredient)"
@@ -24,6 +26,9 @@
         <v-text-field
           label="Add an ingredient"
           v-model="ingredient"
+          color="light-blue"
+          append-icon="mdi-plus-box"
+          @click:append="submit"
         ></v-text-field>
       </v-form>
     </v-card-text>
