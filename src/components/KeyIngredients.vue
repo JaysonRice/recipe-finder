@@ -22,12 +22,13 @@
         <em>No ingredients yet</em>
       </v-card-subtitle>
 
-      <v-form @submit.prevent="submit">
+      <v-form @submit.prevent="submit" ref="ingredientForm">
         <v-text-field
           label="Add an ingredient"
           v-model="ingredient"
           color="light-blue"
           append-icon="mdi-plus-box"
+          :rules="validators.ingredient"
           @click:append="submit"
         ></v-text-field>
       </v-form>
@@ -41,6 +42,14 @@ export default {
   data() {
     return {
       ingredient: "",
+      validators: {
+        ingredient: [
+          (val) => !!val || "Enter an ingredient",
+          (val) =>
+            !this.ingredients.includes(val) ||
+            `${val} is already an ingredient`,
+        ],
+      },
     };
   },
   computed: {
@@ -49,8 +58,14 @@ export default {
   methods: {
     ...mapMutations(["addIngredient", "removeIngredient"]),
     submit() {
+      const isValid = this.$refs.ingredientForm.validate();
+      if (!isValid) {
+        // Form is not valid. Exit the method
+        return;
+      }
       this.addIngredient(this.ingredient);
       this.ingredient = "";
+      this.$refs.ingredientForm.resetValidation();
     },
   },
 };
